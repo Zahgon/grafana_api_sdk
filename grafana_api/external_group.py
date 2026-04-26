@@ -38,19 +38,7 @@ class ExternalGroup:
         Returns:
             api_call (list): Returns the external groups
         """
-        if team_id != 0:
-            api_call: list = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.EXTERNAL_GROUPS.value}/{team_id}/groups",
-            )
-
-            if api_call == list() or api_call[0].get("orgId") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no team_id defined.")
-            raise ValueError
+        pass
 
     def add_external_group(
         self,
@@ -74,21 +62,7 @@ class ExternalGroup:
         Returns:
             api_call (list): Returns the external groups
         """
-        if team_id != 0 and len(group_id) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.EXTERNAL_GROUPS.value}/{team_id}/groups",
-                RequestsMethods.POST,
-                json.dumps(dict({"groupId": group_id})),
-            )
-
-            if api_call.get("message") != "Group added to Team":
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully added the group to the team.")
-        else:
-            logging.error("There is no team_id or group_id defined.")
-            raise ValueError
+        pass
 
     def remove_external_group(
         self,
@@ -112,17 +86,4 @@ class ExternalGroup:
         Returns:
             api_call (list): Returns the external groups
         """
-        if team_id != 0 and len(group_id) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.EXTERNAL_GROUPS.value}/{team_id}/groups/{group_id}",
-                RequestsMethods.DELETE,
-            )
-
-            if api_call.get("message") != "Team Group removed":
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully removed the group from the team.")
-        else:
-            logging.error("There is no team_id or group_id defined.")
-            raise ValueError
+        pass

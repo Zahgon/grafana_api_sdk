@@ -47,30 +47,7 @@ class Library:
         Returns:
             api_call (dict): Returns the library elements
         """
-
-        additional_parameters: str = ""
-        if search_string is not None and len(search_string) != 0:
-            additional_parameters += f"&searchString={search_string}"
-
-        if types_filter is not None and len(types_filter) != 0:
-            additional_parameters += f"&typeFilter={types_filter}"
-
-        if exclude_uid is not None and len(exclude_uid) != 0:
-            additional_parameters += f"&excludeUid={exclude_uid}"
-
-        if folder_filter_ids is not None and len(folder_filter_ids) != 0:
-            additional_parameters += f"&folderFilter={folder_filter_ids}"
-
-        api_call: dict = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.LIBRARY.value}?perpage={results_per_page}&page={pages}&kind={kind}"
-            f"&sortDirection={sort_direction}{additional_parameters}",
-        )
-
-        if api_call == dict() or api_call.get("result") is None:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def get_library_element_by_uid(self, uid: str) -> dict:
         """The method includes a functionality to get a library element with the given uid
@@ -85,20 +62,7 @@ class Library:
         Returns:
             api_call (dict): Returns the corresponding library element
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.LIBRARY.value}/{uid}",
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass
 
     def get_library_element_by_name(self, name: str) -> dict:
         """The method includes a functionality to get a library element with the given name
@@ -113,20 +77,7 @@ class Library:
         Returns:
             api_call (dict): Returns the corresponding library element
         """
-
-        if len(name) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.LIBRARY.value}/name/{name}",
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no name defined.")
-            raise ValueError
+        pass
 
     def get_library_element_connections(self, uid: str) -> dict:
         """The method includes a functionality to get a list of connections for a library element based on the specified uid
@@ -141,20 +92,7 @@ class Library:
         Returns:
             api_call (dict): Returns the corresponding list of connections
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.LIBRARY.value}/{uid}/connections",
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass
 
     def create_library_element(
         self,
@@ -182,41 +120,7 @@ class Library:
         Returns:
             api_call (dict): Returns the newly created library element
         """
-
-        if (
-            folder_id != 0
-            and model is not None
-            and model != dict()
-            and kind is not None
-            and kind != 0
-        ):
-            request_parameters: dict = dict(
-                {"folderId": folder_id, "model": model, "kind": kind}
-            )
-
-            if folder_uid is not None and len(folder_uid) != 0:
-                request_parameters.update({"folderUid": folder_uid})
-
-            if name is not None and len(name) != 0:
-                request_parameters.update({"name": name})
-
-            if uid is not None and len(uid) != 0:
-                request_parameters.update({"uid": uid})
-
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                APIEndpoints.LIBRARY.value,
-                RequestsMethods.POST,
-                json.dumps(request_parameters),
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no folder_id, kind or model defined.")
-            raise ValueError
+        pass
 
     def update_library_element(
         self,
@@ -246,46 +150,7 @@ class Library:
         Returns:
             api_call (dict): Returns the updated library element
         """
-
-        if (
-            len(uid) != 0
-            and folder_id != 0
-            and len(folder_uid) != 0
-            and len(name) != 0
-            and model is not None
-            and model != dict()
-            and version != 0
-            and kind is not None
-            and kind != 0
-        ):
-            request_parameters: dict = dict(
-                {
-                    "uid": uid,
-                    "folderId": folder_id,
-                    "folderUid": folder_uid,
-                    "name": name,
-                    "model": model,
-                    "version": version,
-                    "kind": kind,
-                }
-            )
-
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.LIBRARY.value}/{uid}",
-                RequestsMethods.PATCH,
-                json.dumps(request_parameters),
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error(
-                "There is no folder_id, folder_uid, name, version, kind or model defined."
-            )
-            raise ValueError
+        pass
 
     def delete_library_element(self, uid: str):
         """The method includes a functionality to delete a library element specified by the uid
@@ -300,20 +165,4 @@ class Library:
         Returns:
             None
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.LIBRARY.value}/{uid}",
-                RequestsMethods.DELETE,
-            )
-
-            if api_call.get("message") != "Library element deleted":
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info(
-                    "You successfully deleted the corresponding Library element."
-                )
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass

@@ -36,44 +36,7 @@ class QueryHistory:
         Returns:
             api_call (dict): Returns the added result of the query history
         """
-
-        if len(datasource_uid) != 0 and len(queries) != 0:
-            queries_json_list: list = list()
-
-            for query in queries:
-                query_json_dict: dict = dict(
-                    {
-                        "refId": query.ref_id,
-                        "key": query.key,
-                        "scenarioId": query.scenario_id,
-                        "datasource": dict(
-                            {"type": query.datasource.type, "uid": query.datasource.uid}
-                        ),
-                    }
-                )
-                queries_json_list.append(query_json_dict)
-
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                APIEndpoints.QUERY_HISTORY.value,
-                RequestsMethods.POST,
-                json.dumps(
-                    dict(
-                        {
-                            "datasourceUid": datasource_uid,
-                            "queries": queries_json_list,
-                        }
-                    )
-                ),
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no datasource_uid or queries defined.")
-            raise ValueError
+        pass
 
     def search_query_history(
         self,
@@ -101,30 +64,7 @@ class QueryHistory:
         Returns:
             api_call (dict): Returns the corresponding result of the query history
         """
-
-        if len(datasource_uids) != 0 and len(search_string) != 0:
-            datasource_uids_str: str = ""
-
-            for i in range(0, len(datasource_uids)):
-                datasource_uids_str = (
-                    f"{datasource_uids_str}datasourceUid='{datasource_uids[i]}'"
-                )
-
-                if len(datasource_uids) != 1 and i != len(datasource_uids) - 1:
-                    datasource_uids_str = f"{datasource_uids_str}&"
-
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.QUERY_HISTORY.value}?{datasource_uids_str}&searchString='{search_string}'&sort='{sort}'&onlyStarred={only_starred}&page={pages}&limit={results_per_page}",
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no datasource_uids or search_string defined.")
-            raise ValueError
+        pass
 
     def delete_query_history(self, uid: str):
         """The method includes a functionality to delete a query inside the query history
@@ -139,20 +79,7 @@ class QueryHistory:
         Returns:
              None
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.QUERY_HISTORY.value}/{uid}", RequestsMethods.DELETE
-            )
-
-            if api_call.get("message") != "Query deleted":
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully deleted the query.")
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass
 
     def update_query_history(self, uid: str, comment: str) -> dict:
         """The method includes a functionality to update a query inside the query history
@@ -168,22 +95,7 @@ class QueryHistory:
         Returns:
             api_call (dict): Returns the modified result of the query history
         """
-
-        if len(uid) != 0 and len(comment) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.QUERY_HISTORY.value}/{uid}",
-                RequestsMethods.PATCH,
-                json.dumps({"comment": comment}),
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no uid or comment defined.")
-            raise ValueError
+        pass
 
     def star_query_history(self, uid: str) -> dict:
         """The method includes a functionality to star a query inside the query history
@@ -198,22 +110,7 @@ class QueryHistory:
         Returns:
             api_call (dict): Returns the corresponding stared query history
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.QUERY_HISTORY.value}/star/{uid}",
-                RequestsMethods.POST,
-                json.dumps({}),
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass
 
     def unstar_query_history(self, uid: str) -> dict:
         """The method includes a functionality to unstar a query inside the query history
@@ -228,18 +125,4 @@ class QueryHistory:
         Returns:
             api_call (dict): Returns the corresponding unstared query history
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.QUERY_HISTORY.value}/star/{uid}",
-                RequestsMethods.DELETE,
-            )
-
-            if api_call == dict() or api_call.get("result") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass

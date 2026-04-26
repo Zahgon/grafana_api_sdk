@@ -48,43 +48,7 @@ class Snapshot:
         Returns:
             api_call (dict): Returns the snapshot information of the dashboard
         """
-
-        if dashboard_json != dict():
-            if external:
-                if (key is None or len(key) == 0) and (
-                    delete_key is None or len(delete_key) == 0
-                ):
-                    logging.error(
-                        "It's necessary that you define the key and the delete_key, if you use the external snapshot "
-                        "opportunity. "
-                    )
-                    raise ValueError
-
-            snapshot_json: dict = {
-                "dashboard": dashboard_json,
-                "name": name,
-                "expires": expires,
-                "external": external,
-                "key": key,
-                "deleteKey": delete_key,
-            }
-
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                APIEndpoints.SNAPSHOTS.value,
-                RequestsMethods.POST,
-                json.dumps(snapshot_json),
-            )
-
-            if api_call == dict() or (
-                api_call.get("id") is None and api_call.get("key") is None
-            ):
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no dashboard_json defined.")
-            raise ValueError
+        pass
 
     def get_snapshots(self) -> list:
         """The method includes a functionality to list all dashboard snapshots
@@ -95,16 +59,7 @@ class Snapshot:
         Returns:
             api_call (list): Returns all dashboard snapshots
         """
-
-        api_call: list = Api(self.grafana_api_model).call_the_api(
-            APIEndpoints.DASHBOARD_SNAPSHOTS.value,
-        )
-
-        if api_call == list() or api_call[0].get("name") is None:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def get_snapshot_by_key(self, key: str) -> dict:
         """The method includes a functionality to get a specific dashboard snapshot by the key
@@ -119,20 +74,7 @@ class Snapshot:
         Returns:
             api_call (dict): Returns a specific dashboard snapshot
         """
-
-        if len(key) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.SNAPSHOTS.value}/{key}",
-            )
-
-            if api_call == dict() or api_call.get("dashboard").get("id") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no key defined.")
-            raise ValueError
+        pass
 
     def delete_snapshot_by_key(self, key: str):
         """The method includes a functionality to delete a specific dashboard snapshot by the key
@@ -147,23 +89,7 @@ class Snapshot:
         Returns:
             None
         """
-
-        if len(key) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.SNAPSHOTS.value}/{key}", RequestsMethods.DELETE
-            )
-
-            if (
-                api_call.get("message")
-                != "Snapshot deleted. It might take an hour before it's cleared from any CDN caches."
-            ):
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully destroyed the dashboard snapshot.")
-        else:
-            logging.error("There is no key defined.")
-            raise ValueError
+        pass
 
     def delete_snapshot_by_delete_key(self, delete_key: str):
         """The method includes a functionality to delete a specific dashboard snapshot by the delete_key
@@ -178,20 +104,4 @@ class Snapshot:
         Returns:
             None
         """
-
-        if len(delete_key) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.SNAPSHOTS.value}-delete/{delete_key}",
-            )
-
-            if (
-                api_call.get("message")
-                != "Snapshot deleted. It might take an hour before it's cleared from any CDN caches."
-            ):
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully destroyed the dashboard snapshot.")
-        else:
-            logging.error("There is no delete_key defined.")
-            raise ValueError
+        pass

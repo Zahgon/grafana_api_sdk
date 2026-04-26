@@ -46,20 +46,7 @@ class AlertingProvisioning:
         Returns:
             api_call (dict): Returns the alert rule
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/alert-rules/{uid}",
-            )
-
-            if api_call == dict() or api_call.get("id") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass
 
     def add_alert_rule(self, alert_rule: AlertRule, disable_provenance: bool = False):
         """The method includes a functionality to create a new alert rule
@@ -75,24 +62,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if alert_rule is not None:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/alert-rules",
-                RequestsMethods.POST,
-                json.dumps(self._create_alert_rule_dictionary(alert_rule)),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully created the corresponding alert rule.")
-        else:
-            logging.error("There is no alert_rule defined.")
-            raise ValueError
+        pass
 
     def update_alert_rule(
         self, uid: str, alert_rule: AlertRule, disable_provenance: bool = False
@@ -111,24 +81,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(uid) != 0 and alert_rule is not None:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/alert-rules/{uid}",
-                RequestsMethods.PUT,
-                json.dumps(self._create_alert_rule_dictionary(alert_rule)),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully updated the corresponding alert rule.")
-        else:
-            logging.error("There is no uid or alert_rule defined.")
-            raise ValueError
+        pass
 
     def update_the_interval_of_a_alert_rule_group(
         self,
@@ -152,28 +105,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(folder_uid) != 0 and len(group) != 0 and alert_rule_group_interval != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/folder/{folder_uid}/rule-groups/{group}",
-                RequestsMethods.PUT,
-                json.dumps({"interval": alert_rule_group_interval}),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info(
-                    "You successfully updated the corresponding alert rule group interval."
-                )
-        else:
-            logging.error(
-                "There is no folder_uid, group or alert_rule_group_interval defined."
-            )
-            raise ValueError
+        pass
 
     def delete_alert_rule(self, uid: str, disable_provenance: bool = False):
         """The method includes a functionality to delete an alert rule
@@ -188,23 +120,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/alert-rules/{uid}",
-                RequestsMethods.DELETE,
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully deleted the corresponding alert rule.")
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass
 
     def get_all_contact_points(self) -> list:
         """The method includes a functionality to get all contact points
@@ -215,16 +131,7 @@ class AlertingProvisioning:
         Returns:
             api_call (list): Returns all contact points
         """
-
-        api_call: list = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.ALERTING_PROVISIONING.value}/contact-points",
-        )
-
-        if api_call == list():
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def add_contact_point(
         self,
@@ -244,33 +151,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if embedded_contact_point is not None:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/contact-points",
-                RequestsMethods.POST,
-                json.dumps(
-                    {
-                        "name": embedded_contact_point.name,
-                        "type": embedded_contact_point.type,
-                        "settings": embedded_contact_point.settings,
-                        "disableResolveMessage": embedded_contact_point.disable_resolve_message,
-                        "provenance": embedded_contact_point.provenance,
-                        "UID": embedded_contact_point.uid,
-                    }
-                ),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully created a new contact point.")
-        else:
-            logging.error("There is no embedded_contact_point defined.")
-            raise ValueError
+        pass
 
     def update_contact_point(
         self,
@@ -292,33 +173,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(uid) != 0 and embedded_contact_point is not None:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/contact-points/{uid}",
-                RequestsMethods.PUT,
-                json.dumps(
-                    {
-                        "name": embedded_contact_point.name,
-                        "type": embedded_contact_point.type,
-                        "settings": embedded_contact_point.settings,
-                        "disableResolveMessage": embedded_contact_point.disable_resolve_message,
-                        "provenance": embedded_contact_point.provenance,
-                        "UID": embedded_contact_point.uid,
-                    }
-                ),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully updated the contact point.")
-        else:
-            logging.error("There is no embedded_contact_point or uid defined.")
-            raise ValueError
+        pass
 
     def delete_contact_point(self, uid: str):
         """The method includes a functionality to delete a contact point
@@ -333,22 +188,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(uid) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/contact-points/{uid}",
-                RequestsMethods.DELETE,
-                response_status_code=True,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully deleted the contact point.")
-        else:
-            logging.error("There is no uid defined.")
-            raise ValueError
+        pass
 
     def get_notification_policies(self) -> dict:
         """The method includes a functionality to get the notification policy tree
@@ -359,17 +199,7 @@ class AlertingProvisioning:
         Returns:
             api_call (dict): Returns the notification policy tree
         """
-
-        api_call: dict = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.ALERTING_PROVISIONING.value}/policies",
-            response_status_code=True,
-        )
-
-        if 200 <= api_call.get("status") >= 300:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def add_notification_policies(self, route: Route, disable_provenance: bool = False):
         """The method includes a functionality to set the notification policy tree
@@ -385,24 +215,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if route is not None:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/policies",
-                RequestsMethods.PUT,
-                json.dumps(self._create_alert_route_dictionary(route)),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully added the notification policies.")
-        else:
-            logging.error("There is no route defined.")
-            raise ValueError
+        pass
 
     def get_all_mute_timings(self) -> list:
         """The method includes a functionality to get all mute timings
@@ -413,16 +226,7 @@ class AlertingProvisioning:
         Returns:
             api_call (list): Returns all mute timings
         """
-
-        api_call: list = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.ALERTING_PROVISIONING.value}/mute-timings",
-        )
-
-        if isinstance(api_call, list) is False:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def get_mute_timing(self, name: str) -> dict:
         """The method includes a functionality to get a mute timings specified by the name
@@ -437,20 +241,7 @@ class AlertingProvisioning:
         Returns:
             api_call (dict): Returns the mute timing
         """
-
-        if len(name) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/mute-timings/{name}",
-            )
-
-            if api_call == dict():
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no name defined.")
-            raise ValueError
+        pass
 
     def add_mute_timing(
         self, mute_time_interval: MuteTimeInterval, disable_provenance: bool = False
@@ -468,24 +259,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if mute_time_interval is not None:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/mute-timings",
-                RequestsMethods.POST,
-                json.dumps(self._create_mute_timing_dictionary(mute_time_interval)),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully added the mute timing.")
-        else:
-            logging.error("There is no mute_time_interval defined.")
-            raise ValueError
+        pass
 
     def update_mute_timing(
         self,
@@ -507,24 +281,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(name) != 0 and mute_time_interval is not None:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/mute-timings/{name}",
-                RequestsMethods.PUT,
-                json.dumps(self._create_mute_timing_dictionary(mute_time_interval)),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully updated the mute timing.")
-        else:
-            logging.error("There is no name or mute_time_interval defined.")
-            raise ValueError
+        pass
 
     def delete_mute_timing(self, name: str):
         """The method includes a functionality to delete a mute timings specified by the name
@@ -539,22 +296,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(name) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/mute-timings/{name}",
-                RequestsMethods.DELETE,
-                response_status_code=True,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully deleted the mute timing.")
-        else:
-            logging.error("There is no name defined.")
-            raise ValueError
+        pass
 
     def get_all_message_templates(self) -> list:
         """The method includes a functionality to get all message templates
@@ -565,16 +307,7 @@ class AlertingProvisioning:
         Returns:
             api_call (list): Returns all message templates
         """
-
-        api_call: list = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.ALERTING_PROVISIONING.value}/templates",
-        )
-
-        if isinstance(api_call, list) is False:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def get_message_template(self, name: str) -> dict:
         """The method includes a functionality to get a message template specified by the name
@@ -589,21 +322,7 @@ class AlertingProvisioning:
         Returns:
             api_call (dict): Returns the message template
         """
-
-        if len(name) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/templates/{name}",
-                response_status_code=True,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no name defined.")
-            raise ValueError
+        pass
 
     def create_or_update_message_template(
         self, name: str, message_template: str, disable_provenance: bool = False
@@ -622,24 +341,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(name) != 0 and len(message_template) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/templates/{name}",
-                RequestsMethods.PUT,
-                json.dumps({"template": message_template}),
-                response_status_code=True,
-                disable_provenance_header=disable_provenance,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully created/ updated the message template.")
-        else:
-            logging.error("There is no name or message defined.")
-            raise ValueError
+        pass
 
     def delete_message_template(self, name: str):
         """The method includes a functionality to delete a message template
@@ -654,22 +356,7 @@ class AlertingProvisioning:
         Returns:
             None
         """
-
-        if len(name) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.ALERTING_PROVISIONING.value}/templates/{name}",
-                RequestsMethods.DELETE,
-                response_status_code=True,
-            )
-
-            if 200 <= api_call.get("status") >= 300:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully deleted the message template.")
-        else:
-            logging.error("There is no name defined.")
-            raise ValueError
+        pass
 
     def _create_mute_timing_dictionary(
         self, mute_time_interval: MuteTimeInterval
@@ -682,15 +369,7 @@ class AlertingProvisioning:
         Returns:
             result (dict): Returns the mute timing dictionary
         """
-
-        return dict(
-            {
-                "name": mute_time_interval.name,
-                "time_intervals": self._create_mute_timing_interval_list(
-                    mute_time_interval.time_intervals
-                ),
-            }
-        )
+        pass
 
     def _create_mute_timing_interval_list(
         self, time_intervals: List[TimeInterval]
@@ -703,24 +382,7 @@ class AlertingProvisioning:
         Returns:
             result (list, None): Returns the mute time interval list or None
         """
-
-        mute_timing_interval_list: list = list()
-
-        if time_intervals is not None and isinstance(time_intervals, list):
-            for time_interval in time_intervals:
-                mute_timing_interval_list.append(
-                    {
-                        "days_of_month": time_interval.days_of_month,
-                        "months": time_interval.months,
-                        "times": self._create_time_range_list(time_interval.times),
-                        "weekdays": time_interval.weekdays,
-                        "years": time_interval.years,
-                    }
-                )
-
-            return mute_timing_interval_list
-        else:
-            return time_intervals
+        pass
 
     @staticmethod
     def _create_time_range_list(timing: List[TimeRange]) -> (list, None):
@@ -732,18 +394,7 @@ class AlertingProvisioning:
         Returns:
             timing_list (list): Returns the time list
         """
-
-        timing_list: list = list()
-
-        if timing is not None and isinstance(timing, list):
-            for time in timing:
-                timing_list.append(
-                    {"start_time": time.start_time, "end_time": time.end_time}
-                )
-
-            return timing_list
-        else:
-            return timing
+        pass
 
     def _create_alert_route_dictionary(self, route: Route) -> dict:
         """The method includes a functionality to create the alert route dictionary
@@ -754,23 +405,7 @@ class AlertingProvisioning:
         Returns:
             result (dict): Returns the alert route dictionary
         """
-
-        return dict(
-            {
-                "continue": route.continue_parameter,
-                "group_by": route.group_by_str,
-                "mute_time_intervals": route.mute_time_intervals,
-                "receiver": route.receiver,
-                "routes": self._create_alert_routes_list(route.routes),
-                "group_interval": route.group_interval,
-                "group_wait": route.group_wait,
-                "object_matchers": self._create_object_matcher_list(
-                    route.object_matchers
-                ),
-                "provenance": route.provenance,
-                "repeat_interval": route.repeat_interval,
-            }
-        )
+        pass
 
     def _create_alert_routes_list(self, routes: List[Route]) -> (list, None):
         """The method includes a functionality to create the alert route list
@@ -781,16 +416,7 @@ class AlertingProvisioning:
         Returns:
             result (list, None): Returns the alert routes list or None
         """
-
-        routes_list: list = list()
-
-        if routes is not None and isinstance(routes, list):
-            for route in routes:
-                routes_list.append(self._create_alert_route_dictionary(route))
-
-            return routes_list
-        else:
-            return routes
+        pass
 
     @staticmethod
     def _create_object_matcher_list(matchers: List[Matcher]) -> (list, None):
@@ -802,24 +428,7 @@ class AlertingProvisioning:
         Returns:
             route_matchers_list (list): Returns the list of object matchers
         """
-
-        route_matchers_list: list = list()
-
-        if matchers is not None and isinstance(matchers, list):
-            for matcher in matchers:
-                route_matcher_dict: dict = dict(
-                    {
-                        "name": matcher.name,
-                        "type": matcher.type.value,
-                        "value": matcher.value,
-                    }
-                )
-
-                route_matchers_list.append(route_matcher_dict)
-
-            return route_matchers_list
-        else:
-            return matchers
+        pass
 
     def _create_alert_rule_dictionary(self, alert_rule: AlertRule) -> dict:
         """The method includes a functionality to create the alert rule dictionary
@@ -830,26 +439,7 @@ class AlertingProvisioning:
         Returns:
             result (dict): Returns the alert rule dictionary
         """
-
-        return dict(
-            {
-                "annotations": alert_rule.annotations,
-                "condition": alert_rule.condition,
-                "data": self._create_alert_rule_query_list(alert_rule.data),
-                "execErrState": alert_rule.exec_err_state,
-                "folderUID": alert_rule.folder_uid,
-                "id": alert_rule.id,
-                "labels": alert_rule.labels,
-                "noDataState": alert_rule.no_data_state,
-                "orgID": alert_rule.org_id,
-                "ruleGroup": alert_rule.rule_group,
-                "title": alert_rule.title,
-                "uid": alert_rule.uid,
-                "updated": alert_rule.updated,
-                "for": alert_rule.for_time,
-                "provenance": alert_rule.provenance,
-            }
-        )
+        pass
 
     def _create_alert_rule_query_list(self, alert_queries: List[AlertQuery]) -> list:
         """The method includes a functionality to create the alert rule query list
@@ -860,28 +450,7 @@ class AlertingProvisioning:
         Returns:
             alert_rule_queries_list (list): Returns the alert rule query list
         """
-
-        alert_rule_queries_list: list = list()
-
-        for alert_query in alert_queries:
-            alert_query_dict: dict = dict(
-                {
-                    "datasourceUID": alert_query.datasource_uid,
-                    "model": self._create_alert_rule_query_model_dictionary(
-                        alert_query.model
-                    ),
-                    "queryType": alert_query.query_type,
-                    "refID": alert_query.ref_id,
-                    "relativeTimeRange": {
-                        "from": alert_query.relative_time_range_from,
-                        "to": alert_query.relative_time_range_to,
-                    },
-                }
-            )
-
-            alert_rule_queries_list.append(alert_query_dict)
-
-        return alert_rule_queries_list
+        pass
 
     def _create_alert_rule_query_model_dictionary(
         self, alert_query_model: AlertRuleQueryModel
@@ -894,21 +463,7 @@ class AlertingProvisioning:
         Returns:
             result (dict): Returns the alert rule query model dictionary
         """
-
-        return dict(
-            {
-                "conditions": self._create_alert_rule_query_model_condition_list(
-                    alert_query_model.conditions
-                ),
-                "datasource": alert_query_model.datasource,
-                "expression": alert_query_model.expression,
-                "hide": alert_query_model.hide,
-                "intervalMs": alert_query_model.interval_ms,
-                "maxDataPoints": alert_query_model.max_data_points,
-                "refId": alert_query_model.ref_id,
-                "type": alert_query_model.type,
-            }
-        )
+        pass
 
     @staticmethod
     def _create_alert_rule_query_model_condition_list(
@@ -922,30 +477,4 @@ class AlertingProvisioning:
         Returns:
             alert_rule_query_model_conditions_list (list): Returns the alert rule query model conditions list
         """
-
-        alert_rule_query_model_conditions_list: list = list()
-
-        for alert_rule_query_model_condition in alert_rule_query_model_conditions:
-            alert_rule_query_model_condition_dict: dict = dict(
-                {
-                    "evaluator": {
-                        "params": alert_rule_query_model_condition.evaluator_params,
-                        "type": alert_rule_query_model_condition.evaluator_type,
-                    },
-                    "operator": {
-                        "type": alert_rule_query_model_condition.operator_type
-                    },
-                    "query": {"params": alert_rule_query_model_condition.query_params},
-                    "reducer": {
-                        "params": alert_rule_query_model_condition.reducer_params,
-                        "type": alert_rule_query_model_condition.reducer_type,
-                    },
-                    "type": alert_rule_query_model_condition.type,
-                }
-            )
-
-            alert_rule_query_model_conditions_list.append(
-                alert_rule_query_model_condition_dict
-            )
-
-        return alert_rule_query_model_conditions_list
+        pass

@@ -30,15 +30,4 @@ class Search:
         Returns:
             api_call (list): Returns the list of query the results
         """
-
-        if len(search_query) != 0:
-            result: list = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.SEARCH.value}?{search_query}"
-            )
-            if result == list():
-                raise Exception
-            else:
-                return result
-        else:
-            logging.error("There is no search_query defined.")
-            raise ValueError
+        pass

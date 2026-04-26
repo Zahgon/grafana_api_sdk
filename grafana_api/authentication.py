@@ -33,17 +33,7 @@ class Authentication:
         Returns:
             api_call (list): Returns the result of the API token call
         """
-
-        api_call: list = Api(self.grafana_api_model).call_the_api(
-            APIEndpoints.AUTHENTICATION.value,
-            org_id_header=org_id_header,
-        )
-
-        if api_call != list() and api_call[0].get("id") is None:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def create_api_token(
         self,
@@ -67,31 +57,7 @@ class Authentication:
         Returns:
             api_call (dict): Returns the API token object
         """
-
-        if len(name) != 0 and len(role) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                APIEndpoints.AUTHENTICATION.value,
-                RequestsMethods.POST,
-                json.dumps(
-                    dict(
-                        {
-                            "name": name,
-                            "role": role,
-                            "secondsToLive": seconds_to_live,
-                        }
-                    )
-                ),
-                org_id_header=org_id_header,
-            )
-
-            if api_call == dict() or api_call.get("id") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no name or role defined.")
-            raise ValueError
+        pass
 
     def delete_api_token(
         self,
@@ -111,19 +77,4 @@ class Authentication:
         Returns:
             None
         """
-
-        if token_id != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                f"{APIEndpoints.AUTHENTICATION.value}/{token_id}",
-                RequestsMethods.DELETE,
-                org_id_header=org_id_header,
-            )
-
-            if api_call.get("message") != "API key deleted":
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully deleted the token.")
-        else:
-            logging.error("There is no token_id defined.")
-            raise ValueError
+        pass

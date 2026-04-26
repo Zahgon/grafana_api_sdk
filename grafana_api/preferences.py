@@ -29,16 +29,7 @@ class Preferences:
         Returns:
             api_call (dict): Returns the current user preferences
         """
-
-        api_call: dict = Api(self.grafana_api_model).call_the_api(
-            APIEndpoints.USER_PREFERENCES.value,
-        )
-
-        if isinstance(api_call, dict) is False or api_call == dict():
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def update_current_user_preferences(
         self,
@@ -62,39 +53,7 @@ class Preferences:
         Returns:
             None
         """
-
-        if (
-            theme is not None
-            or (home_dashboard_id != 0 or home_dashboard_uid is not None)
-            or timezone is not None
-        ):
-            modified_values: dict = dict()
-
-            if theme is not None:
-                modified_values.update(dict({"theme": theme}))
-
-            if home_dashboard_id != 0 and isinstance(home_dashboard_id, int):
-                modified_values.update(dict({"homeDashboardId": home_dashboard_id}))
-            else:
-                modified_values.update({"homeDashboardUID": home_dashboard_uid})
-
-            if timezone is not None:
-                modified_values.update(dict({"timezone": timezone}))
-
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                APIEndpoints.USER_PREFERENCES.value,
-                RequestsMethods.PATCH,
-                json.dumps(modified_values),
-            )
-
-            if api_call.get("message") != "Preferences updated":
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully updated the current user preferences.")
-        else:
-            logging.error("There is no updated value defined.")
-            raise ValueError
+        pass
 
     def get_current_org_preferences(
         self,
@@ -107,16 +66,7 @@ class Preferences:
         Returns:
             api_call (dict): Returns the current user preferences
         """
-
-        api_call: dict = Api(self.grafana_api_model).call_the_api(
-            APIEndpoints.ORG_PREFERENCES.value,
-        )
-
-        if isinstance(api_call, dict) is False or api_call == dict():
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def update_current_org_preferences(
         self,
@@ -140,36 +90,4 @@ class Preferences:
         Returns:
             None
         """
-
-        if (
-            theme is not None
-            or (home_dashboard_id != 0 or home_dashboard_uid is not None)
-            or timezone is not None
-        ):
-            modified_values: dict = dict()
-
-            if theme is not None:
-                modified_values.update(dict({"theme": theme}))
-
-            if home_dashboard_id != 0 and isinstance(home_dashboard_id, int):
-                modified_values.update(dict({"homeDashboardId": home_dashboard_id}))
-            else:
-                modified_values.update({"homeDashboardUID": home_dashboard_uid})
-
-            if timezone is not None:
-                modified_values.update(dict({"timezone": timezone}))
-
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                APIEndpoints.ORG_PREFERENCES.value,
-                RequestsMethods.PATCH,
-                json.dumps(modified_values),
-            )
-
-            if api_call.get("message") != "Preferences updated":
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                logging.info("You successfully updated the current org preferences.")
-        else:
-            logging.error("There is no updated value defined.")
-            raise ValueError
+        pass

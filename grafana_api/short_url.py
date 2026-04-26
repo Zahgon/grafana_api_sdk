@@ -31,19 +31,4 @@ class ShortUrl:
         Returns:
             api_call (dict): Returns the uid and the url of the newly generated link
         """
-
-        if len(path) != 0:
-            api_call: dict = Api(self.grafana_api_model).call_the_api(
-                APIEndpoints.SHORT_URLS.value,
-                RequestsMethods.POST,
-                json.dumps(dict({"path": path})),
-            )
-
-            if api_call == dict() or api_call.get("url") is None:
-                logging.error(f"Check the error: {api_call}.")
-                raise Exception
-            else:
-                return api_call
-        else:
-            logging.error("There is no path defined.")
-            raise ValueError
+        pass

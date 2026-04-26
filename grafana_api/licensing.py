@@ -38,16 +38,7 @@ class Licensing:
         Returns:
             api_call (bool): Returns the result if the license is available or not
         """
-
-        api_call: Response = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.LICENSING.value}/check",
-        )
-
-        if api_call.status_code != 200:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return json.loads(str(api_call.text))
+        pass
 
     def manually_force_license_refresh(self):
         """The method includes a functionality to manually ask license issuer for a new token
@@ -62,18 +53,7 @@ class Licensing:
         Returns:
             api_call (dict): Returns the result of license refresh call
         """
-
-        api_call: dict = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.LICENSING.value}/token/renew",
-            RequestsMethods.POST,
-            json.dumps({}),
-        )
-
-        if api_call == dict() or api_call.get("jti") is None:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            return api_call
+        pass
 
     def remove_license_from_database(self):
         """The method includes a functionality to removes the license stored in the Grafana database
@@ -88,17 +68,4 @@ class Licensing:
         Returns:
             api_call (dict): Returns the result of license refresh call
         """
-
-        api_call: dict = Api(self.grafana_api_model).call_the_api(
-            f"{APIEndpoints.LICENSING.value}/token",
-            RequestsMethods.DELETE,
-            response_status_code=True,
-        )
-
-        if api_call.get("status") != 200:
-            logging.error(f"Check the error: {api_call}.")
-            raise Exception
-        else:
-            logging.info(
-                "You successfully removed the corresponding license from the database."
-            )
+        pass
